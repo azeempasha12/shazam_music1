@@ -4,18 +4,26 @@ const getEmailFromLocalStorage = () => {
   const user = localStorage.getItem('user');
   return user ? JSON.parse(user) : null;
 };
-
-
-
-
-
 const email = getEmailFromLocalStorage()
 
+// this code is working now
+// const getEmailFromLocalStorage = () => {
+//   const user = localStorage.getItem('user');
+//   try {
+//     return user ? JSON.parse(user) : null;
+//   } catch (error) {
+//     console.error("Error parsing user data from localStorage:", error);
+//     return null;
+//   }
+// };
+
+// const email = getEmailFromLocalStorage()
+// localStorage.setItem('user', JSON.stringify({ email }));
 
 
 const initialState = {
   email:email,
-  bookmarks: {}, 
+  bookmarks: [], 
 };
 
 export const saveBookmarkToDb = createAsyncThunk(

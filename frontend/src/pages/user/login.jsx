@@ -16,7 +16,7 @@ const LoginForm = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    const apiUrl = "http://localhost:3000/login";
+    const apiUrl = "http://localhost:3000/api/user/login";
 
 
       // const response = await fetch(apiUrl, {

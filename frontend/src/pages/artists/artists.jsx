@@ -1,27 +1,35 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react'; 
 
 export default function Artists() {
   const [songs, setSongs] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const artistsData = async () => {
-    const url = 'https://shazam.p.rapidapi.com/artists/get-top-songs?id=567072&l=en-US';
-    const options = {
-      method: 'GET',
-      headers: {
-        'x-rapidapi-key': '3b2c8185a3msh44fdd6f55848e3ep10eef1jsnacc300209e24',
-        'x-rapidapi-host': 'shazam.p.rapidapi.com',
-      },
-    };
+    const cachedData = localStorage.getItem('topSongs'); // Check localStorage for cached data
 
-    try {
-      const response = await fetch(url, options);
-      const result = await response.json();
-      setSongs(result.data || []);
+    if (cachedData) {
+      setSongs(JSON.parse(cachedData)); // Use cached data
       setLoading(false);
-    } catch (error) {
-      console.error(error);
-      setLoading(false);
+    } else {
+      const url = 'https://shazam.p.rapidapi.com/artists/get-top-songs?id=567072&l=en-US';
+      const options = {
+        method: 'GET',
+        headers: {
+          'x-rapidapi-key': 'f03b2fcccamsh4147cfbec335665p10d6d0jsn3f63412b6c07',
+          'x-rapidapi-host': 'shazam.p.rapidapi.com',
+        },
+      };
+
+      try {
+        const response = await fetch(url, options);
+        const result = await response.json();
+        setSongs(result.data || []);
+        localStorage.setItem('topSongs', JSON.stringify(result.data || [])); // Cache the fetched data
+        setLoading(false);
+      } catch (error) {
+        console.error(error);
+        setLoading(false);
+      }
     }
   };
 

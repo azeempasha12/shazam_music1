@@ -4,11 +4,18 @@ export default function Album() {
   const [data, setData] = useState(null);
 
   const albumData = async () => {
+    const cachedData = localStorage.getItem("albumData");
+    if (cachedData) {
+      // Use cached data if available
+      setData(JSON.parse(cachedData));
+      return;
+    }
+
     const url = "https://shazam.p.rapidapi.com/albums/get-details?id=850576570&l=en-US";
     const options = {
       method: "GET",
       headers: {
-        "x-rapidapi-key": "3b2c8185a3msh44fdd6f55848e3ep10eef1jsnacc300209e24",
+        "x-rapidapi-key": "f03b2fcccamsh4147cfbec335665p10d6d0jsn3f63412b6c07",
         "x-rapidapi-host": "shazam.p.rapidapi.com",
       },
     };
@@ -16,9 +23,14 @@ export default function Album() {
     try {
       const response = await fetch(url, options);
       const result = await response.json();
-      setData(result.data[0]?.attributes);
+      console.log("Fetched Result:", result);
+      const albumData = result.data[0]?.attributes;
+      if (albumData) {
+        setData(albumData);
+        localStorage.setItem("albumData", JSON.stringify(albumData));
+      }
     } catch (error) {
-      console.error(error);
+      console.error("Error fetching album data:", error);
     }
   };
 

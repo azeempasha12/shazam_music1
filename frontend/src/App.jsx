@@ -8,8 +8,8 @@ import MusicChart from './pages/music/musicTop';
 import MusicDetails from './pages/music/musicDetails';
 import Home from "./pages/home"
 import store from './component/reduxToolkit/store/store';
-import Album from './pages/album/album'; 
-import Artists from './pages/artists/artists';
+//import Album from './pages/album/album'; 
+//import Artists from './pages/artists/artists';
 import Bookmark from './component/bookMark/bookmark';
 
 
@@ -23,8 +23,8 @@ function App() {
         <Route path="/" element={<Navbar />}>
        
         <Route path="getapp" element={<GetApp />} />
-        <Route path='album' element={<Album/>}/>
-        <Route path='artists' element={<Artists/>}/>
+        {/* <Route path='album' element={<Album/>}/> */}
+        {/* <Route path='artists' element={<Artists/>}/> */}
         <Route path='bookmark' element={<Bookmark/>}/>
        <Route path='/' element ={<Home/>}/>
        

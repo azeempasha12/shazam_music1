@@ -6,7 +6,7 @@ export default function Bookmark() {
   const dispatch = useDispatch();
 
   const bookmarks = useSelector((store) => store.bookmarks.bookmarks);
-  console.log("Bookmark",bookmarks)
+  console.log("Bookmarkcd",bookmarks)
 
   const handleRemoveBookmark = (trackId) => {
     dispatch(removeBookmark({ email: userEmail, trackId }));
