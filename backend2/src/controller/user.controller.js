@@ -6,7 +6,7 @@ const register = async( req, res) =>{
 
     try{
         const  { name , email, password} = req.body
-        console.log("zindagi check point",req.body)
+        console.log("check point",req.body)
         const user = await User.create({
             name,
             email,

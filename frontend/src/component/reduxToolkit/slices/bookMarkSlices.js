@@ -1,10 +1,15 @@
 import { createSlice,createAsyncThunk  } from "@reduxjs/toolkit";
 
 const getEmailFromLocalStorage = () => {
-  const user = localStorage.getItem('user');
+  const user = localStorage.getItem('users');
   return user ? JSON.parse(user) : null;
 };
-const email = getEmailFromLocalStorage()
+const user = getEmailFromLocalStorage();
+const email = user[0]?.email || null ;
+console.log(user);
+console.log(email);
+
+
 
 // this code is working now
 // const getEmailFromLocalStorage = () => {
@@ -23,7 +28,7 @@ const email = getEmailFromLocalStorage()
 
 const initialState = {
   email:email,
-  bookmarks: [], 
+  bookmarks: [], //earlier it {}
 };
 
 export const saveBookmarkToDb = createAsyncThunk(
