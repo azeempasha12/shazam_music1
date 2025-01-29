@@ -3,11 +3,11 @@ import { useLocation } from "react-router-dom";
 
 export default function MusicDetails() {
   const location = useLocation();
-  const { id } = location.state || {}; // Get song ID from location state
+  const { id } = location.state || {}; 
   const [songDetails, setSongDetails] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Fetch song details based on the song ID
+
   const fetchSongDetails = async (songId) => {
     try {
       const response = await fetch(
@@ -21,7 +21,7 @@ export default function MusicDetails() {
         }
       );
       const data = await response.json();
-      setSongDetails(data?.track); // Set song details to state
+      setSongDetails(data?.track);
       setLoading(false);
     } catch (error) {
       console.error("Error fetching song details:", error);

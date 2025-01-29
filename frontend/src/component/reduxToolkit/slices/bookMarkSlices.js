@@ -8,23 +8,9 @@ const user = getEmailFromLocalStorage();
 // const email = user[0]?.email || null ;
 const email = user?.email || null ;
 console.log("user",user);
-//console.log("email",email);
 
 
 
-// this code is working now
-// const getEmailFromLocalStorage = () => {
-//   const user = localStorage.getItem('user');
-//   try {
-//     return user ? JSON.parse(user) : null;
-//   } catch (error) {
-//     console.error("Error parsing user data from localStorage:", error);
-//     return null;
-//   }
-// };
-
-// const email = getEmailFromLocalStorage()
-// localStorage.setItem('user', JSON.stringify({ email }));
 
 
 const initialState = {
@@ -80,5 +66,4 @@ const bookmarksSlice = createSlice({
 export const { userEmail,addBookmark, removeBookmark, clearBookmarks } = bookmarksSlice.actions;
 export default bookmarksSlice.reducer;
 
-// Selectors
 export const selectBookmarksByEmail = (state, email) => state.bookmarks.bookmarks[email] || [];

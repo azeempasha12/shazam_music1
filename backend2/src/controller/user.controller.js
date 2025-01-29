@@ -38,9 +38,9 @@ const login = async( req,res)=>{
         res.cookie("authToken", token, {
             path: "/", // Cookie is available site-wide
             expires: new Date(Date.now() + 36000000), // Corrected Date syntax
-            secure: true, // Ensures the cookie is sent over HTTPS only
+            secure: true, 
             httpOnly: true, // Prevents client-side JavaScript from accessing the cookie
-            sameSite: "None" // Corrected property name
+            sameSite: "None" 
         });
         console.log("check point1 ")
      return res.status(200).send({message: "login successfully",   email: user.email, token,})

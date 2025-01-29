@@ -5,7 +5,7 @@ export default function Artists() {
   const [loading, setLoading] = useState(true);
 
   const artistsData = async () => {
-    const cachedData = localStorage.getItem('topSongs'); // Check localStorage for cached data
+    const cachedData = localStorage.getItem('topSongs'); 
 
     if (cachedData) {
       setSongs(JSON.parse(cachedData)); // Use cached data

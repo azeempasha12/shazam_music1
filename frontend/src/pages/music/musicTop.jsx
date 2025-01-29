@@ -11,15 +11,14 @@ export default function MusicChart() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // const email = useSelector((state) => state.bookmarks.email);
-  // console.log("email",email)
+
 
   const getEmailFromLocalStorage = () => {
   const user = localStorage.getItem('users');
   return user ? JSON.parse(user) : null;
 };
 const email = getEmailFromLocalStorage();
-// const email = user[0]?.email || null ;
+
 const user = email?.email || null ;
 console.log("email",email);
 
@@ -92,7 +91,7 @@ console.log("email",email);
     dispatch(saveBookmarkToDb({ email, songData }));
     console.log("data goves to server",email,songData)
     
-    //navigate("/bookmark");
+    
   };
 
 

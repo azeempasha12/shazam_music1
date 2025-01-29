@@ -1,5 +1,5 @@
-import { Link, useNavigate, Outlet } from "react-router-dom"; // Import Outlet
-import { FaSearch, FaBars } from "react-icons/fa"; // Include Hamburger icon
+import { Link, useNavigate, Outlet } from "react-router-dom"; 
+import { FaSearch, FaBars } from "react-icons/fa"; 
 import { useState } from "react";
 
 export default function Navbar() {
@@ -100,7 +100,6 @@ export default function Navbar() {
         )}
       </nav>
 
-      {/* This is where the nested route (GetApp) will render */}
       <Outlet />
     </div>
   );
