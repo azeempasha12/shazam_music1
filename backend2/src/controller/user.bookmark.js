@@ -1,15 +1,16 @@
 import Song from "../models/bookmark.js";
 import mongoose from "mongoose";
 
+
  const bookmark = async (req, res) => {
   try {
-    const userId = req.id; // Assuming `req.id` contains the authenticated user's ID
-    const { email, id, title, subtitle, image, ...rest } = req.body;
+    const userId = req.email; // Assuming `req.id` contains the authenticated user's ID
+    const { email, title, subtitle, image, trackId, ...rest } = req.body;
 
     console.log("bhaii jaan ka data", req.body)
 
     // Validate inputs
-    if (!email || !id || !title || !subtitle || !image) {
+    if (!email || !image || !subtitle || !title || !trackId) {
       return res.status(400).json({ message: "Invalid request data." });
     }
 
@@ -19,21 +20,21 @@ import mongoose from "mongoose";
     if (existingUser) {
       // Update bookmarks if the song is not already bookmarked
       const isAlreadyBookmarked = existingUser.bookmarks.some(
-        (bookmark) => bookmark.id === id
+        (bookmark) => String( bookmark.trackId )== String(trackId)
       );
 
       if (isAlreadyBookmarked) {
         return res.status(400).json({ message: "Song is already bookmarked." });
       }
 
-      existingUser.bookmarks.push({ id, title, subtitle, image, ...rest });
+      existingUser.bookmarks.push({ email, image, subtitle, title, trackId, ...rest });
       await existingUser.save();
       return res.status(200).json({ message: "Bookmark added successfully." });
     } else {
       // Create a new user with the bookmark
       const newBookmark = new Song({
         email,
-        bookmarks: [{ id, title, subtitle, image, ...rest }],
+        bookmarks: [{email, image,subtitle, title, trackId, ...rest }],
       });
 
       await newBookmark.save();
@@ -45,6 +46,34 @@ import mongoose from "mongoose";
     console.log("check Point1")
   }
 };
+
+// ******************************getCall***********************
+
+// Fetch bookmarks for a user
+// const bookmarkData = async (req, res) => {
+//   try {
+//     const email = req.param.email; // Assume the email is sent as a query parameter
+//   console.log("email", email)
+//     if (!email) {
+//       return res.status(400).json({ message: "Email is required." });
+//     }
+
+//     // Fetch the user with the given email
+//     const user = await Song.findOne({ email });
+
+//     if (!user || !user.bookmarks.length) {
+//       return res.status(404).json({ message: "No bookmarks found for this user." });
+//     }
+
+//     return res.status(200).json({ bookmarks: user.bookmarks });
+//   } catch (error) {
+//     console.error("Error fetching bookmarks:", error);
+//     res.status(500).json({ message: "Internal server error." });
+//   }
+// };
+
+
+// *********************************getCall***********************
 
 
 
@@ -79,5 +108,6 @@ const removeBookmark = async (req, res) => {
   
 export{
     bookmark,
-    removeBookmark
+    removeBookmark,
+    //  bookmarkData
 }

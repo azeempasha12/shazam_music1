@@ -16,6 +16,7 @@ const register = async( req, res) =>{
       
         return res.status(201).send({message:"Account has been created"})
 
+
     } catch(error){
             return res.status(500).send({message:"error resgistering", error: error.message})
 
@@ -42,7 +43,7 @@ const login = async( req,res)=>{
             sameSite: "None" // Corrected property name
         });
         console.log("check point1 ")
-     return res.status(200).send({message: "login successfully", token})
+     return res.status(200).send({message: "login successfully",   email: user.email, token,})
 
 
     }catch(error){

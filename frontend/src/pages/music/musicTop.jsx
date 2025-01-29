@@ -4,12 +4,28 @@ import { MdBookmark } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { addBookmark, saveBookmarkToDb } from "../../component/reduxToolkit/slices/bookMarkSlices";
 import axios from "axios";
+ import { toast,ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function MusicChart() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const email = useSelector((state) => state.bookmarks.email);
+  // const email = useSelector((state) => state.bookmarks.email);
+  // console.log("email",email)
+
+  const getEmailFromLocalStorage = () => {
+  const user = localStorage.getItem('users');
+  return user ? JSON.parse(user) : null;
+};
+const email = getEmailFromLocalStorage();
+// const email = user[0]?.email || null ;
+const user = email?.email || null ;
+console.log("email",email);
+
+
+
+
   const [tracks, setTracks] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -33,6 +49,7 @@ export default function MusicChart() {
         const result = await response.json();
         setTracks(result.tracks?.hits || []);
         localStorage.setItem("musicChartData", JSON.stringify(result.tracks?.hits || []));
+       
       }
       setLoading(false);
     } catch (error) {
@@ -45,10 +62,10 @@ export default function MusicChart() {
     if (!track || !track.images?.coverart) return;
 
     const songData = {
-      email:email,
-      title: track.title,
-      subtitle: track.subtitle,
+      email,
       image: track.images.coverart,
+      subtitle: track.subtitle,
+      title: track.title,
       trackId: track.key,
     };
 
@@ -59,18 +76,26 @@ export default function MusicChart() {
     }
 
       try {
-         const  response = await axios.post("http://localhost:3000/bookmark/add",songData);
+         const  response = await axios.post("http://localhost:3000/api/user/login/bookmark",songData);
          console.log('check point 1');
          console.log(response);
+         toast.success(response.data.message,{autoClose: 2000});
       } catch (error) {
-        console.log(error)
+        if (error.response && error.response.status === 400) {
+          toast.warning("already bookmarked!", { autoClose: 2000 });
+        }else {
+          toast.error("Something went wrong. Please try again.", { autoClose: 2000 });
+        }
       }
 
     dispatch(addBookmark({ songData }));
     dispatch(saveBookmarkToDb({ email, songData }));
     console.log("data goves to server",email,songData)
-    navigate("/bookmark");
+    
+    //navigate("/bookmark");
   };
+
+
 
   useEffect(() => {
     getDataFromApi();
@@ -86,6 +111,7 @@ export default function MusicChart() {
 
   return (
     <div className="p-4 font-sans">
+        <ToastContainer />
       <h1 className="text-center text-3xl font-bold mb-6">Global Top 200 Chart</h1>
 
       {/* Responsive Grid Layout */}
@@ -122,7 +148,9 @@ export default function MusicChart() {
                   }}
                 >
                   <MdBookmark size={20} />
+                  
                 </button>
+               
               </div>
 
               {/* Song Info */}

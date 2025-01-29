@@ -5,9 +5,10 @@ const getEmailFromLocalStorage = () => {
   return user ? JSON.parse(user) : null;
 };
 const user = getEmailFromLocalStorage();
-const email = user[0]?.email || null ;
-console.log(user);
-console.log(email);
+// const email = user[0]?.email || null ;
+const email = user?.email || null ;
+console.log("user",user);
+//console.log("email",email);
 
 
 
@@ -27,10 +28,11 @@ console.log(email);
 
 
 const initialState = {
-  email:email,
+  email:user,
   bookmarks: [], //earlier it {}
 };
 
+console.log("initialState.email:-",initialState.email)
 export const saveBookmarkToDb = createAsyncThunk(
   "bookmarks/saveBookmarkToDb",
   async (bookmarkData, { rejectWithValue }) => {
@@ -62,7 +64,7 @@ const bookmarksSlice = createSlice({
       const { email, trackId } = action.payload;
       if (state.bookmarks[email]) {
         state.bookmarks[email] = state.bookmarks[email].filter(
-          (id) => id !== trackId
+          (trackId) => trackId !== trackId
         );
       }
     },

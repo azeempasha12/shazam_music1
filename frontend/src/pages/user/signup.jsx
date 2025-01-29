@@ -28,6 +28,7 @@ export default function Signup() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ name, email, password }), // Send form data
+       
       });
 
       if (response.ok) {

@@ -21,10 +21,12 @@ const songSchema = new mongoose.Schema({
     email: { type: String, required: true, unique: true },
     bookmarks: [
       {
-        id: { type: Number, required: true },
-        title: { type: String, required: true },
-        subtitle: { type: String, required: true },
         image: { type: String, required: true },
+        subtitle: { type: String, required: true },
+        title: { type: String, required: true },
+        trackId: { type: Number, required: true },
+        
+       
       },
     ],
   });

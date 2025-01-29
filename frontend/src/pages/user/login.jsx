@@ -17,22 +17,14 @@ const LoginForm = () => {
     e.preventDefault();
 
     const apiUrl = "http://localhost:3000/api/user/login";
-
-
-      // const response = await fetch(apiUrl, {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify({ email, password }),
-      // });
      try {
       const response = await axios.post(apiUrl,{email,password});
       console.log(response);
       console.log('check point 1');
       const emailData = response.data.email;
+      console.log("emailData",emailData)
         
-        localStorage.setItem("user", JSON.stringify(emailData));
+        localStorage.setItem("users", JSON.stringify(emailData));
         toast.success("Login successful!");
         dispatch(userEmail(emailData));
         navigate("/");
@@ -49,7 +41,7 @@ const LoginForm = () => {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-blue-400 to-blue-100 relative">
-      <Toaster />
+      <Toaster/>
       {/* Shazam button at the top-left */}
       <div
         className="absolute top-6 left-6 flex items-center space-x-2 cursor-pointer"
